@@ -3,6 +3,20 @@
   "version": "1.0.0",
   "description": "Web App Dev Environment",
   "scripts": {
+    "prestart":"babel-node scripts/start_message.js",
+    "start":"npm-run-all --parallel security-check  start-server lint:watch test:watch start-mockapi",
+    "start-server":"babel-node scripts/dev_server.js",
+    "lint":"esw webpack.config.* src scripts --color",
+    "lint:watch":"npm run lint -- --watch",
+    "security-check":"nsp check",
+    "localtunnel":"lt --port 3000",
+    "share": "npm-run-all --parallel start-server localtunnel",
+    "test": "mocha --reporter progress scripts/test.js \"src/**/*.test.js\"",
+    "test:watch": "npm run test -- --watch",
+    "generate-mock-data":"babel-node scripts/generate_mock_data.js",
+    "prestart-mockapi":"npm run generate-mock-data",
+    "start-mockapi": "json-server --watch src/api/db.json --port 3001"
+
   },
   "author": "Developer Name",
   "license": "MIT",
